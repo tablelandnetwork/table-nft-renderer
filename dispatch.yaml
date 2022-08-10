@@ -1,0 +1,3 @@
+dispatch:
+  - url: "icon.tableland.xyz/*"
+    service: table-nft-svg

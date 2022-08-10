@@ -14,16 +14,16 @@ const colors = [
 export default function findColor(rows) {
   let i;
   switch(true) {
-    case (rows < 9):      i = 0; break;
-    case (rows < 20):     i = 1; break;
-    case (rows < 50):     i = 2; break;
-    case (rows < 100):    i = 3; break;
-    case (rows < 200):    i = 4; break;
-    case (rows < 500):    i = 5; break;
-    case (rows < 1000):   i = 6; break;
-    case (rows < 5000):   i = 7; break;
-    case (rows < 20000):  i = 8; break;
-    case (rows >= 20000): i = 9; break;   
+    case (rows < 9 * 3):      i = 0; break;
+    case (rows < 20 * 3):     i = 1; break;
+    case (rows < 50 * 3):     i = 2; break;
+    case (rows < 100 * 3):    i = 3; break;
+    case (rows < 200 * 3):    i = 4; break;
+    case (rows < 500 * 3):    i = 5; break;
+    case (rows < 1000 * 3):   i = 6; break;
+    case (rows < 5000 * 3):   i = 7; break;
+    case (rows < 20000 * 3):  i = 8; break;
+    case (rows >= 20000 * 3): i = 9; break;   
 
   }
   return colors[i];

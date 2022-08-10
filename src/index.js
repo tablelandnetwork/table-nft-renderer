@@ -12,7 +12,12 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
 
-
+function nameSlice(name) {
+  if(name.length > 20) {
+    return name.slice(0, 20) + "...";
+  }
+  return name;
+}
 
 const chains = {
   1:        {name: "Etherum Mainnet",   slug: "ethereum"},
@@ -35,42 +40,41 @@ app.use("/:chain_id/:table_id", async (req, res, next) => {
     });
     let data = await conn.read(`SELECT * FROM ${table_data.name};`);
     res.set("Content-Type", "image/svg+xml");
-    let columnStartingPosition = 95;
+    let columnStartingPosition = 115;
     const columnsMarkup = columns.map((column, key) => {
       let constraints = column.constraints.length ? `(${column.constraints.join(",")})` : '';
-      let column_value = `<text x="19" y="${columnStartingPosition}" class="text text-small">${column.name} ${column.type} ${constraints}</text>`;
+      let column_value = `<text x="40" y="${columnStartingPosition}" class="text text-small">${column.name} ${column.type} ${constraints}</text>`;
       let content;
-      if(columns.length < 9) {
+      if(columns.length < 8) {
         content = column_value;
-        columnStartingPosition += 15;
+        columnStartingPosition += 20;
         return content;      
       }      
       switch(true) {
-        case key < 6: 
+        case key < 5: 
           content = column_value;      
           break;
-        case key === 6: 
-          content = `<text x="19" y="${columnStartingPosition}" class="text text-small line-over">-</text>`;
+        case key === 5: 
+          content = `<text x="40" y="${columnStartingPosition}" class="text text-small line-over">-</text>`;
           break;
-        case key === 7: 
-          content = `<text x="19" y="${columnStartingPosition}" class="text text-small line-over">${columns.length - 6} more columns</text>`;
+        case key === 6: 
+          content = `<text x="40" y="${columnStartingPosition}" class="text text-small line-over">${columns.length - 6} more columns</text>`;
           break;
         default: 
           content = "";
       }
-      columnStartingPosition += 15;
+      columnStartingPosition += 20;
       return content;
     }).join("");
     res.send(`
-    <svg class="bg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+    <svg class="bg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
       <style>
         * {
           font-family: "Andale Mono";
         }
-        .bg { background: ${findColor(data.rows.length)}; }
+        .bg { background: ${findColor(data.rows.length * columns.length)}; }
         .text { 
           font: 16px sans-serif; 
-          
           fill: white; 
           font-family: "Andale Mono";
           text-transform: lowercase;
@@ -79,7 +83,7 @@ app.use("/:chain_id/:table_id", async (req, res, next) => {
           font-weight: 900;
         }
         .text-small {
-          font: italic 12px sans-serif;
+
           font-family: "Andale Mono";
         }
         .text-elip {
@@ -101,12 +105,11 @@ app.use("/:chain_id/:table_id", async (req, res, next) => {
           ${font}
         }
         </style>
-      <text x="5" y="20" class="text text-name">${table_data.name}</text>
-      <text x="5" y="40" class="text">${chain.name}</text>
-      <text x="5" y="60" class="text">rows: ${data.rows.length}</text>
-      <text x="5" y="80" class="text">columns:</text>
+      <text x="25" y="35" class="text text-name">${nameSlice(table_data.name)}</text>
+      <text x="25" y="55" class="text">${chain.name}</text>
+      <text x="25" y="75" class="text">rows: ${data.rows.length}</text>
+      <text x="25" y="95" class="text">columns:</text>
       ${columnsMarkup}
-      <text y="220" x="90" class="text text-elip">...</text>
     </svg>
 
     `);
