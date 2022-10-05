@@ -5,14 +5,30 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./server/index.js",
+    "build": "npx mix",
+    "build:watch": "npx mix watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@tableland/sdk": "^3.1.2",
+    "laravel-mix": "^6.0.49",
+    "prismjs": "^1.29.0",
+    "react": "^18.2.0",
+    "react-router": "^6.4.1",
+    "react-router-dom": "^6.4.1",
+    "react-simple-code-editor": "^0.13.1",
     "ethers": "^5.6.9",
     "express": "^4.18.1",
     "node-fetch": "^3.2.10"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.18.6",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.55.0",
+    "sass-loader": "^12.1.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.3"
   }
 }
