@@ -80,8 +80,10 @@ function App(props) {
   });
 
   return (
-    <>
-      <div className="editor-wrapper"  >
+    <div className="application-wrapper">
+      <header></header>
+      <Table results={results} />
+      <div className="editor-wrapper">
         <CodeEditor code={code} onChange={(val) => {
           setCode(val);
         }} />
@@ -91,9 +93,9 @@ function App(props) {
           Query
         </button>
       </div>
-      <Table results={results} />
 
-    </>
+
+    </div>
   );
 }
 
