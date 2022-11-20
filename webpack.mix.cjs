@@ -32,7 +32,7 @@ const webpackConfig = {
 mix
   .setPublicPath("./dist/public")
   .webpackConfig(webpackConfig)
-  .sass("app/style.scss", "public/styles")
+  .sass("app/styles/style.scss", "public/styles")
   .ts('app/app.tsx', 'public/js')
   .copy('app/assets', 'dist/public/assets')
   .copy('app/index.html', 'dist/public')

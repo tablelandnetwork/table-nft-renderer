@@ -1,3 +1,17 @@
+@import "buttons";
+@import "../../node_modules/@rainbow-me/rainbowkit/dist/index.css";
+
+html {
+  --primary: #75B6B5;
+  --dark-primary: #162929;
+  --darkest-primary: #101E1E;
+  --inactive: #326563;
+
+  --primaryLight: #F4706B;
+  --error-light: rgb(255, 160, 160);
+  --error-dark: #200;
+}
+
 /* Reset */
 
 *, *::before, *::after {
@@ -77,71 +91,111 @@ button {
   cursor: pointer;
 }
 
-html {
+// html {
 
-  // Grey
-  --grey-light: #bbb;
-  --grey-mid: #777;
-  --grey-mid-dark: #444;
-  --grey-dark: #191919;
-  --grey-dark-ish: #262626;
-  --grey-active: rgb(47, 47, 54);
-  --grey-transparent-500: rgba(155,155,155, .5);
+//   // Grey
+//   --grey-light: #bbb;
+//   --grey-mid: #777;
+//   --grey-mid-dark: #444;
+//   --grey-dark: #191919;
+//   --grey-dark-ish: #262626;
+//   --grey-active: rgb(47, 47, 54);
+//   --grey-transparent-500: rgba(155,155,155, .5);
 
-  // White
-  --white: #fff;
-  --white-near: #f5f5f5;
-  --white-transparent-400: rgba(255,255,255,.4);
-  --white-muted: #ccc;
+//   // White
+//   --white: #fff;
+//   --white-near: #f5f5f5;
+//   --white-transparent-400: rgba(255,255,255,.4);
+//   --white-muted: #ccc;
 
-  // Black
-  --black: #000;
-  --black-near: #080808;
+//   // Black
+//   --black: #000;
+//   --black-near: #080808;
 
-  // Colorful
-  --error-light: rgb(255, 160, 160);
-  --error-dark: #200;
+//   // Colorful
+//   --error-light: rgb(255, 160, 160);
+//   --error-dark: #200;
 
-  --accent-color: #e8c9f3;
-  --primary-color: #ff6567;
-  --secondary-color: #6067eb;
-  --bright-green: #0f0;
+//   --accent-color: #e8c9f3;
+//   --primary-color: #ff6567;
+//   --primary: #75B6B5;
+//   --secondary-color: #6067eb;
+//   --bright-green: #0f0;
 
 
-  ---negative-space-absolute: var(--black);
+//   ---negative-space-absolute: var(--black);
 
-  html[data-theme='light'] {
-    ---negative-space-absolute: var(--white);
-    ---negative-space-near: var(--white-near);
-    ---negative-space-muted: var(--white-near);
+//   html[data-theme='light'] {
+//     ---negative-space-absolute: var(--white);
+//     ---negative-space-near: var(--white-near);
+//     ---negative-space-muted: var(--white-near);
 
-    ---grey-near-negative: var(--grey-light);
-    ---grey-near-positive: var(--grey-dark);
-  }
-}
+//     ---grey-near-negative: var(--grey-light);
+//     ---grey-near-positive: var(--grey-dark);
+//   }
+// }
 
 .application-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-rows: max-content 60% 1fr;
   flex-direction: column;
-  max-height: 100vh;
+  height: 100vh;
+	background-color: var(--darkest-primary);
+  color: var(--primary);
+}
+
+header {
+  display: flex;
+  padding: 10px;
+  background-color: var(--primary);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar--logo {
+  padding: 10px;
+  height: 50px;
+  width: 80px;
+}
+
+
+.error {
+  display: block;
+  border: 1px solid var(--error-dark);
+  background-color: var(--error-light);
+  border-radius: 3px;
+  padding: 10px;
+  color: var(--error-dark);
+  font-weight: 900;
+  margin-bottom: 10px;
 }
 
 /* Code Editor */
 
+.code-editor-wrapper {
+  width: 100%;
+  overflow: auto;
+}
+
 .editor-wrapper {
-	margin: 10px; 
 	border: 1px solid var(--grey-dark);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background-color: var(--dark-primary);
+  justify-content: space-between;
+  max-height: 100%;
+  overflow: auto;
+  button {
+    margin-right: 5px;
+  }
 }
 
 .editor {
   counter-reset: line;
   width: 100%;
-  // border: 1px solid var(--grey-mid);
-  
-  background-color: var(--grey-dark-ish);
+  background-color: var(--dark-primary);
+  border-top: 1px solid #555;
 }
 
 .editor #codeEditor {
@@ -396,13 +450,13 @@ table.tabula-rasa {
   overflow: hidden;
   overflow-x: scroll;
   position: relative;
-	background-color: var(--grey-dark-ish);
+  
   
   th, td {
     padding: 10px 16px 10px 10px;
     position: relative;
     color: var(--white);
-    border: 1px solid var(--grey-mid-dark);
+    border: 1px solid var(--dark-primary);
     border-top: 0px;
     border-right: 0px;
     border-left: 0px;
@@ -436,9 +490,6 @@ table.tabula-rasa {
   }
   td {
     
-    &:hover {
-      // background-color: var(--grey-transparent-500);
-    }
     &.selected {
       background-color: var(--grey-mid-dark);
     }
@@ -523,4 +574,43 @@ button {
   padding: 5px 10px;
   font-family: sans-serif;
   margin: 10px 0px;
+}
+
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  margin-top: calc(50vh - 40px);
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.table-wrapper {
+  max-height: 60vh;
+  overflow: scroll;
+  background-color: var(--grey-dark-ish);
 }
