@@ -19,6 +19,7 @@ const { chains, provider } = configureChains(
   ]
 );
 
+
 const { connectors } = getDefaultWallets({
   appName: 'Tableland Table NFT',
   chains

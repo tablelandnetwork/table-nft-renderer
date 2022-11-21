@@ -45,12 +45,13 @@ app.use((req, res, next) => {
 });
 
 app.use('/anim', express.static('./dist/public'));
+app.use('/js', express.static('./dist/public/js'));
 
 app.use('/anim', async (req, res, next) => {
   res.sendFile(`./dist/public/index.html`, {root: __dirname});
 });
 
-app.use("/:chain_id/:table_id", async (req, res, next) => {
+app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
     let table_data = await fetch(`https://testnet.tableland.network/chain/${req.params.chain_id}/tables/${req.params.table_id}`)
       .then(r => r.json());

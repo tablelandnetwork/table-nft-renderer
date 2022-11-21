@@ -35,7 +35,7 @@ select:not(.reset),
 }
 
 .grouped-buttons {
-  button {
+  button, .button {
     &:first-child {
       border-top-right-radius: 0px;
       border-bottom-right-radius: 0px;
@@ -44,7 +44,7 @@ select:not(.reset),
       border-top-left-radius: 0px;
       border-bottom-left-radius: 0px;
     }
-    & + button {
+    & + button, & + .button {
       margin-left: 0px;
       border-left: 1.5px solid #555;
     }

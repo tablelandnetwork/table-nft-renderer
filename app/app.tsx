@@ -46,6 +46,8 @@ function App(props) {
   }
 
   const prov = useProvider();
+  // @ts-ignore
+
 
   startTableLand(prov);
   
@@ -113,7 +115,7 @@ function App(props) {
 
 
     }
-  });
+  }, [message, code, sendQuery]);
 
   return (
     <div className="application-wrapper">
