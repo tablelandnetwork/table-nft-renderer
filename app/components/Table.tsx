@@ -1,19 +1,25 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-function Table(props) {
+function Table() {
+
+  const results = useSelector((store: RootState) => store.results);
+
+  if(!results.columns) return null;
 
   return (
     <div className="table-wrapper">
       <table className="tabula-rasa">
         <thead>
           <tr>
-            {props.results.columns.map(column => {
+            {results.columns.map(column => {
               return <th key={column.name}>{column.name}</th>
             })}
           </tr>
         </thead>
         <tbody>
-          {props.results.rows.map((row, rowKey) => {
+          {results.rows.map((row, rowKey) => {
             return (
               <tr key={rowKey}>
                 {row.map((cell, cellKey) => {
@@ -26,7 +32,6 @@ function Table(props) {
               </tr>
             )
           })}
-
         </tbody>
       </table>
     </div>

@@ -46,6 +46,8 @@ app.use((req, res, next) => {
 
 app.use('/anim', express.static('./dist/public'));
 app.use('/js', express.static('./dist/public/js'));
+app.use('/assets', express.static('./dist/public/assets'));
+app.use('/3df484376831050b.wasm', express.static('./dist/public/3df484376831050b.wasm'));
 
 app.use('/anim', async (req, res, next) => {
   res.sendFile(`./dist/public/index.html`, {root: __dirname});

@@ -2,13 +2,11 @@ import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function CustomConnectButton(props) {
-    if(!window.ethereum) {
-      return <a href={window.location.href} target="_new" style={{marginRight: "4px"}} className="button secondary">Visit Console to Write ↗</a>
-    }
+
 
     return (
-      <ConnectButton.Custom children={
-        ({
+      <ConnectButton.Custom>
+        {({
           account,
           chain,
           openAccountModal,
@@ -97,8 +95,6 @@ function CustomConnectButton(props) {
             </div>
           );
         }}
-
-      >       
       </ConnectButton.Custom>
     );
   

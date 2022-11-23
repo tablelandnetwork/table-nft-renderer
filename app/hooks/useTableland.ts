@@ -8,17 +8,19 @@ export function getTablelandConnection() {
   return tablelandConnection;
 }
 
-export async function startTableLand(provider) {
+export async function startTableLand(provider, signer) {
 
 
   const chainId = (await provider.getNetwork()).chainId;
 
   const supportedChains = Object.entries(SUPPORTED_CHAINS);
 
+
   let currentChain = supportedChains.find(chain => chain[1].chainId === chainId);
   
   const tbl = await connect({
-    chain: currentChain[0] as ChainName
+    chain: currentChain[0] as ChainName,
+    signer: signer
   });
 
   tablelandConnection = tbl;
