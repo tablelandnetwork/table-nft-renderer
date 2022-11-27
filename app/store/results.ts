@@ -32,11 +32,11 @@ const resultsSlice = createSlice({
 
     }),
     builder.addCase(queryTableland.pending, (state, action) => {
-      state= initialResults;
+      return initialResults;
 
     });
     builder.addCase(queryTableland.rejected, (state, action) => {
-      state = initialResults;
+      return initialResults;
 
     });
   }

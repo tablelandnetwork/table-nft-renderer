@@ -17,6 +17,7 @@ import { RootState } from './store/store';
 import Error from './components/Error';
 import { queryTableland } from './store/queryTableland';
 import SuccessfulWrite from './components/SuccessfulWrite';
+import { setQuery } from './store/query';
 
 init();
 
@@ -46,7 +47,9 @@ function App() {
       fetch(`https://testnet.tableland.network/chain/${chain}/tables/${tableId}`)
         .then(r => r.json())
         .then(r => {
-          dispatch(queryTableland({query: `SELECT * FROM ${r.name} LIMIT 50;`}) as any);
+          var query = `SELECT * FROM ${r.name} LIMIT 50;`;
+          dispatch(queryTableland({query}) as any);
+          dispatch(setQuery(query));
         });
     } 
   }, []);

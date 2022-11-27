@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAccount} from 'wagmi';
 import CodeHighlighter from './CodeHighlighter';
 import { queryTableland } from '../store/queryTableland';
+import { findType, setType } from '../store/type';
 
 
 function CodeEditor(props) {
@@ -23,6 +24,7 @@ function CodeEditor(props) {
     <div className="editor-wrapper">        
       <CodeHighlighter code={query} placeholder="// SQL QUERY HERE" onChange={(val) => {
         dispatch(setQuery(val));
+        dispatch(findType({query:val}) as any);
       }} />
       {(isConnected || typeOfQuery==="read") ? (
       <button className="secondary" disabled={loading} onClick={e => {
