@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store'
+
+
+function inIframe () {
+  try {
+      return window.self !== window.top;
+  } catch (e) {
+      return true;
+  }
+}
 
 function CustomConnectButton(props) {
+
+  const [copied, setCopied] = useState(false);
+  const typeOfQuery = useSelector((store: RootState)=>store.typeOfQuery)
+
+  if(inIframe()) {
+    if(!copied && typeOfQuery === 'write') {
+        return <button onClick={() => {
+          navigator.clipboard.writeText("https://console.tableland.xyz");
+          setCopied(true);
+        }}>📋 Copy link to full app</button>      
+    } else if(copied) {
+      return <button>Now paste in 🔎 bar</button>
+    } else {
+      return null
+    }
+
+  } 
+
 
 
     return (

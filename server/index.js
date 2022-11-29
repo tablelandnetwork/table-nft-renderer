@@ -3,7 +3,9 @@ import fetch from 'node-fetch';
 import * as tableland from '@tableland/sdk';
 import font from './font.js';
 import findColor from "./findColor.js";
+import cors from 'cors';
 const app = express();
+app.use(cors())
 global.fetch = fetch;
 import * as url from 'url';
 const __filename = url.fileURLToPath(import.meta.url);

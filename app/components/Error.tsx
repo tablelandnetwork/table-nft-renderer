@@ -5,7 +5,13 @@ import { RootState } from '../store/store';
 function Error(props) {
 
   
-  const error= useSelector((store: RootState) => store.error);
+  const {error, typeOfQuery} = useSelector((store: RootState) => store);
+  
+  if(typeOfQuery==="write") {
+    return <div className='message'>
+      To modify a table, please visit https://console.tableland.xyz 
+    </div>
+  }
 
   if(!error) return null;
 
