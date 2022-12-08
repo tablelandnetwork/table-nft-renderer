@@ -1,4 +1,5 @@
 @import "buttons";
+@import "toasts";
 @import "../../node_modules/@rainbow-me/rainbowkit/dist/index.css";
 
 html {
@@ -22,7 +23,7 @@ html {
 }
 html, body {
   height: 100%;
-	background-color: var(--grey-dark);
+	background-color: var(--darkest-primary);
 }
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
@@ -619,4 +620,5 @@ button {
   max-height: 60vh;
   overflow: scroll;
   background-color: var(--grey-dark-ish);
+  max-width: 100vw;
 }

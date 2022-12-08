@@ -54,9 +54,9 @@ function ProvidersComponent(props) {
       <BrowserRouter>
         <WagmiConfig client={wagmiClient}>
           {/* @ts-ignore */}
-         <RainbowKitProvider chains={chains}>
+         {/* <RainbowKitProvider chains={chains}> */}
             {props.children}
-          </RainbowKitProvider>
+          {/* </RainbowKitProvider> */}
         </WagmiConfig>
       </BrowserRouter>
     </Provider>

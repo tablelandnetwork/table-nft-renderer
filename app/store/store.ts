@@ -6,9 +6,11 @@ import message from './message';
 import tableName from './table';
 import typeOfQuery from './type';
 import query from './query';
+import toasts from './toastsSlice';
 
 export const store = configureStore({
   reducer: {
+    toasts,
     results,
     query,
     error,

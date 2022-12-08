@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store'
+import { activateToast } from '../store/toastsSlice';
 
 
 function inIframe () {
@@ -12,23 +13,22 @@ function inIframe () {
   }
 }
 
+
 function CustomConnectButton(props) {
 
   const [copied, setCopied] = useState(false);
   const typeOfQuery = useSelector((store: RootState)=>store.typeOfQuery)
+  const dispatch = useDispatch();
 
-  if(inIframe()) {
-    if(!copied && typeOfQuery === 'write') {
-        return <button onClick={() => {
-          navigator.clipboard.writeText("https://console.tableland.xyz");
-          setCopied(true);
-        }}>📋 Copy link to full app</button>      
-    } else if(copied) {
-      return <button>Now paste in 🔎 bar</button>
-    } else {
-      return null
-    }
 
+  if(!copied) {
+      return <button onClick={() => {
+        navigator.clipboard.writeText("https://console.tableland.xyz");
+        dispatch(activateToast({message: `Copied: https://console.tableland.xyz`, type: "success"}));
+        setCopied(true);
+      }}>📋 Copy link to full app</button>      
+  } else {
+    return <button>Now paste in 🔎 bar</button>
   } 
 
 

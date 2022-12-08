@@ -18,6 +18,7 @@ import Error from './components/Error';
 import { queryTableland } from './store/queryTableland';
 import SuccessfulWrite from './components/SuccessfulWrite';
 import { setQuery } from './store/query';
+import Toasts from './components/Toasts';
 
 
 
@@ -67,6 +68,7 @@ function App() {
       </div>
       <CodeEditor />
       <Loading />
+      <Toasts />
     </div>
   );
 }
