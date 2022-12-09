@@ -26,15 +26,15 @@ function nameSlice(name, number=20) {
 }
 
 const chains = {
-  1:        {name: "Ethereum Mainnet",  slug: "ethereum"},
-  5:        {name: "Ethereum Goerli",   slug: "ethereum-goerli"},
-  10:       {name: "Optimism",          slug: "optimism"},
-  69:       {name: "Optimism Kovan",    slug: "optimism-kovan"},
-  137:      {name: "Polygon Mainnet",   slug: "polygon"},
-  420:      {name: "Optimism Goerli",   slug: "optimism-goerli"},
-  80001:    {name: "Polygon Mumbai",    slug: "polygon-mumbai" },
-  42161:    {name: "Arbitrum",          slug: "arbitrum" },
-  421613:   {name: "Arbitrum Rinkeby",  slug: "arbitrum-goerli" }
+  1:        {name: "Ethereum Mainnet",  slug: "ethereum", mainnet: true },
+  5:        {name: "Ethereum Goerli",   slug: "ethereum-goerli", mainnet: false },
+  10:       {name: "Optimism",          slug: "optimism", mainnet: true },
+  69:       {name: "Optimism Kovan",    slug: "optimism-kovan", mainnet: false },
+  137:      {name: "Polygon Mainnet",   slug: "polygon", mainnet: true },
+  420:      {name: "Optimism Goerli",   slug: "optimism-goerli", mainnet: false },
+  80001:    {name: "Polygon Mumbai",    slug: "polygon-mumbai", mainnet: false },
+  42161:    {name: "Arbitrum",          slug: "arbitrum", mainnet: true },
+  421613:   {name: "Arbitrum Rinkeby",  slug: "arbitrum-goerli", mainnet: false }
 };
 
 
@@ -57,10 +57,12 @@ app.use('/anim', async (req, res, next) => {
 
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
-    let table_data = await fetch(`https://testnet.tableland.network/chain/${req.params.chain_id}/tables/${req.params.table_id}`)
+    const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
+    let table_data = await fetch(
+      `https://${network}tableland.network/api/v1/tables/${req.params.chain_id}/${req.params.table_id}`
+      )
       .then(r => r.json());
-    let table_schema = await fetch(`https://testnet.tableland.network/schema/${table_data.name}`).then(r=>r.json());
-    let columns = table_schema.columns;
+    let columns = table_data.schema.columns;
     const chain = chains[req.params.chain_id];
     if(!chain) throw ("unknown chain");
     let conn = await tableland.connect({
@@ -70,7 +72,7 @@ app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
     res.set("Content-Type", "image/svg+xml");
     let columnStartingPosition = 115;
     const columnsMarkup = columns.map((column, key) => {
-      let constraints = column.constraints.length ? `${column.constraints.join(" ")}` : '';
+      let constraints = column?.constraints?.length ? `${column.constraints.join(" ")}` : '';
       let column_details = `${column.name} ${column.type} ${constraints}`;
       let column_value = `<text x="35" y="${columnStartingPosition}" class="text text-small">${nameSlice(column_details, 19)}</text>`;
       let content;
