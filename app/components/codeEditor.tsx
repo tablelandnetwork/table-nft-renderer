@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAccount} from 'wagmi';
 import CodeHighlighter from './CodeHighlighter';
 import { queryTableland } from '../store/queryTableland';
-import { findType, setType } from '../store/type';
+import { findType } from '../store/type';
+import Logo from './Logo';
 
 
 function CodeEditor(props) {
@@ -26,17 +27,19 @@ function CodeEditor(props) {
         dispatch(setQuery(val));
         dispatch(findType({query:val}) as any);
       }} />
-      {(isConnected || typeOfQuery==="read") ? (
-      <button className="secondary" disabled={loading} onClick={e => {
-        if(loading) return;
-        dispatch(queryTableland({query}) as any);
-      }}>
-        {typeOfQuery==="read" ? "Query" : "Write"}
-      </button>
-      ) : (
-        <CustomConnectButton />
-      )}
-
+      <div className='footer'>
+        <Logo />
+        {(isConnected || typeOfQuery==="read") ? (
+        <button className="secondary" disabled={loading} onClick={e => {
+          if(loading) return;
+          dispatch(queryTableland({query}) as any);
+        }}>
+          {typeOfQuery==="read" ? "Query" : "Write"}
+        </button>
+        ) : (
+          <CustomConnectButton />
+        )}
+      </div>
     </div>
   );
 }

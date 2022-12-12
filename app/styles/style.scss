@@ -24,6 +24,8 @@ html {
 html, body {
   height: 100%;
 	background-color: var(--darkest-primary);
+  --main-font: "AndaleMono", AndaleMono, monospace;
+  font-family: var(--main-font); 
 }
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
@@ -92,53 +94,17 @@ button {
   cursor: pointer;
 }
 
-// html {
 
-//   // Grey
-//   --grey-light: #bbb;
-//   --grey-mid: #777;
-//   --grey-mid-dark: #444;
-//   --grey-dark: #191919;
-//   --grey-dark-ish: #262626;
-//   --grey-active: rgb(47, 47, 54);
-//   --grey-transparent-500: rgba(155,155,155, .5);
-
-//   // White
-//   --white: #fff;
-//   --white-near: #f5f5f5;
-//   --white-transparent-400: rgba(255,255,255,.4);
-//   --white-muted: #ccc;
-
-//   // Black
-//   --black: #000;
-//   --black-near: #080808;
-
-//   // Colorful
-//   --error-light: rgb(255, 160, 160);
-//   --error-dark: #200;
-
-//   --accent-color: #e8c9f3;
-//   --primary-color: #ff6567;
-//   --primary: #75B6B5;
-//   --secondary-color: #6067eb;
-//   --bright-green: #0f0;
-
-
-//   ---negative-space-absolute: var(--black);
-
-//   html[data-theme='light'] {
-//     ---negative-space-absolute: var(--white);
-//     ---negative-space-near: var(--white-near);
-//     ---negative-space-muted: var(--white-near);
-
-//     ---grey-near-negative: var(--grey-light);
-//     ---grey-near-positive: var(--grey-dark);
-//   }
-// }
+.footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 10px;
+}
 
 .application-wrapper {
   display: grid;
-  grid-template-rows: max-content 60% 1fr;
+  grid-template-rows: 60% 1fr;
   flex-direction: column;
   height: 100vh;
 	background-color: var(--darkest-primary);
@@ -158,10 +124,15 @@ header {
   align-items: center;
 }
 
-.navbar--logo {
+.logo {
   padding: 10px;
   height: 50px;
   width: 80px;
+  fill: var(--primary);
+  opacity: .75;
+  * {
+    fill: var(--primary);
+  }
 }
 
 

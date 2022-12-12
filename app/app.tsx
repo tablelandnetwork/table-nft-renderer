@@ -60,7 +60,6 @@ function App() {
 
   return (
     <div className={`application-wrapper ${loading ? "loading" : ""}`}>
-      <Header />
       <div>
         <Error />
         <Table />
