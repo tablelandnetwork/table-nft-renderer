@@ -19,10 +19,14 @@ function Toast(props) {
   }, []);
 
   return (
-    <div className={`toast ${type} ${active && activeStarted ? "active" : ""}`} onClick={() => {
-      dispatch(removeToast({id}));
-    }}>
+    <div className={`toast ${type} ${active && activeStarted ? "active" : ""}`}>
       {message}
+
+      <span className='close-toast' onClick={() => {
+        dispatch(removeToast({id}));
+      }}>
+        <i className="fa-solid fa-x"></i>
+      </span>
     </div>
   );
 
