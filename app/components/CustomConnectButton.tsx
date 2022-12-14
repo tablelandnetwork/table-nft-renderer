@@ -23,10 +23,9 @@ function CustomConnectButton(props) {
 
   if(!copied) {
       return <button onClick={() => {
-        navigator.clipboard.writeText("https://console.tableland.xyz");
-        dispatch(activateToast({message: `Copied: https://console.tableland.xyz`, type: "success"}));
-        setCopied(true);
-      }}>📋 Copy link to full app</button>      
+
+        dispatch(activateToast({message: `Copy link to visit full app: https://console.tableland.xyz`, type: "success"}))
+      }}>Get link to full app</button>      
   } else {
     return <button>Now paste in 🔎 bar</button>
   } 

@@ -23,9 +23,11 @@ function Table() {
             return (
               <tr key={rowKey}>
                 {row.map((cell, cellKey) => {
+                  let finalCell = typeof cell === 'object' ? JSON.stringify(cell) : cell;
+
                   return (
                     <td key={cellKey}>
-                      {cell}
+                      {finalCell}
                     </td>
                   )
                 })}

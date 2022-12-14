@@ -37,6 +37,7 @@ function App() {
   let [searchParams] = useSearchParams();
   const chain = searchParams.get("chain");
   const tableId = searchParams.get("id");
+  const query = searchParams.get("query");
 
   const dispatch = useDispatch();
 
@@ -50,9 +51,9 @@ function App() {
       fetch(`https://testnet.tableland.network/chain/${chain}/tables/${tableId}`)
         .then(r => r.json())
         .then(r => {
-          var query = `SELECT * FROM ${r.name} LIMIT 50;`;
-          dispatch(queryTableland({query}) as any);
-          dispatch(setQuery(query));
+          var finalQuery = query ? query : `SELECT * FROM ${r.name} LIMIT 50;`;
+          dispatch(queryTableland({query: finalQuery}) as any);
+          dispatch(setQuery(finalQuery));
         });
     } 
   }, []);

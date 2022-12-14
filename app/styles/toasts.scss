@@ -31,7 +31,6 @@ body {
   justify-content: center;
   align-items: center;
   padding: 16px;
-  cursor: pointer;
   position: relative;
 }
 
@@ -39,7 +38,7 @@ body {
   position: absolute;
   right: 10px;
   top: calc(50% - .5em);
-  
+  cursor: pointer;  
 }
 
 .error {
