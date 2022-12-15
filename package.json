@@ -2,14 +2,21 @@
   "name": "table-nft-view",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/public/js/Renderer.js",
   "type": "module",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
   "scripts": {
     "start": "node ./server/index.js",
     "build": "npx mix",
     "build:watch": "npx mix watch",
-    "go": "tsc"
+    "build:all": "npm build:esm && npm build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
   },
+  "files": [
+    "/lib"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
