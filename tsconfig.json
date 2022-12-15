@@ -6,6 +6,7 @@
       "noImplicitAny": false,
       "sourceMap": false,
       "moduleResolution": "node",
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
   },
 }

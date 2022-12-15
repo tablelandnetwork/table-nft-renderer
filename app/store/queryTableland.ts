@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getTablelandConnection, tablelandConnection } from '../hooks/useTableland';
+import { getTablelandConnection, tablelandConnection } from '../lib/useTableland';
 
 export const queryTableland = createAsyncThunk('results/fetchResults', async (action:any) => {
   const { query } = action;
