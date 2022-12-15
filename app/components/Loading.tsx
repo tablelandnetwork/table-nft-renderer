@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
 function Loading(props) {
-
   
   const loading = useSelector((store: RootState) => store.loading);
 

@@ -34,6 +34,7 @@ mix
   .webpackConfig(webpackConfig)
   .sass("app/styles/style.scss", "public/styles")
   .ts('app/app.tsx', 'public/js')
+  .ts('app/components/Renderer.tsx', 'public/js')
   .copy('app/assets', 'dist/public/assets')
   .copy('app/index.html', 'dist/public')
   .react()

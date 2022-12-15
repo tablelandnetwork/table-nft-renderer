@@ -2,12 +2,13 @@
   "name": "table-nft-view",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/public/js/Renderer.js",
   "type": "module",
   "scripts": {
     "start": "node ./server/index.js",
     "build": "npx mix",
-    "build:watch": "npx mix watch"
+    "build:watch": "npx mix watch",
+    "go": "tsc"
   },
   "author": "",
   "license": "ISC",
