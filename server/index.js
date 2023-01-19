@@ -57,7 +57,7 @@ app.use('/anim', async (req, res, next) => {
 
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
-    const network = chains[req.params.chain_id].mainnet ? "" : "testnet.";
+    const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
     let table_data = await fetch(`https://${network}tableland.network/chain/${req.params.chain_id}/tables/${req.params.table_id}`)
       .then(r => r.json());
     let table_schema = await fetch(`https://${network}tableland.network/schema/${table_data.name}`).then(r=>r.json());
