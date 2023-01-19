@@ -17,6 +17,7 @@ import { queryTableland } from '../store/queryTableland';
 import SuccessfulWrite from '../components/SuccessfulWrite';
 import { setQuery } from '../store/query';
 import Toasts from '../components/Toasts';
+import chains from '../../lib/chains.js';
 
 
 let i = 0;
@@ -29,6 +30,7 @@ function App() {
     message
   } = useSelector((store: RootState) => store);
 
+  
 
   let [searchParams] = useSearchParams();
   const chain = searchParams.get("chain");
@@ -40,7 +42,7 @@ function App() {
   const prov = useProvider();
   const signer = useSigner();
 
-  startTableLand(prov, signer.data);
+  startTableLand(prov, signer.data, chain);
 
   useEffect(() => {
     if(query) {
@@ -48,9 +50,11 @@ function App() {
       dispatch(queryTableland({query: finalQuery}) as any);
       dispatch(setQuery(finalQuery));
     } else if(chain && tableId) {
-      fetch(`https://testnet.tableland.network/chain/${chain}/tables/${tableId}`)
+      const network = chains[parseInt(chain)].mainnet ? "" : "testnets.";
+      fetch(`https://${network}tableland.network/chain/${chain}/tables/${tableId}`)
         .then(r => r.json())
         .then(r => {
+          if(r.name===undefined) return;
           var finalQuery = query ? query : `SELECT * FROM ${r.name} LIMIT 50;`;
           dispatch(queryTableland({query: finalQuery}) as any);
           dispatch(setQuery(finalQuery));
