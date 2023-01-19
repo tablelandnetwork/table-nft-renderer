@@ -43,7 +43,11 @@ function App() {
   startTableLand(prov, signer.data);
 
   useEffect(() => {
-    if(chain && tableId) {
+    if(query) {
+      var finalQuery = query;
+      dispatch(queryTableland({query: finalQuery}) as any);
+      dispatch(setQuery(finalQuery));
+    } else if(chain && tableId) {
       fetch(`https://testnet.tableland.network/chain/${chain}/tables/${tableId}`)
         .then(r => r.json())
         .then(r => {
