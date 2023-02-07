@@ -14,7 +14,7 @@
   "dependencies": {
     "@rainbow-me/rainbowkit": "^0.8.0",
     "@reduxjs/toolkit": "^1.9.0",
-    "@tableland/sdk": "^3.1.5",
+    "@tableland/sdk": "^3.1.7",
     "@tableland/sqlparser": "^0.2.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
