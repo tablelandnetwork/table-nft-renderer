@@ -15,6 +15,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../store/store';
+import inIframe from '../lib/inIframe';
 
 
 const { chains, provider } = configureChains(
@@ -46,17 +47,22 @@ const wagmiClient = createClient({
 });
 
 
-
 function ProvidersComponent(props) {
+
+  let app = inIframe() ? (
+    props.children
+  ) : (
+    <RainbowKitProvider chains={chains}>
+     {props.children}
+    </RainbowKitProvider>
+  );
 
   return (
     <Provider store={store}>
       <BrowserRouter>
         <WagmiConfig client={wagmiClient}>
           {/* @ts-ignore */}
-         {/* <RainbowKitProvider chains={chains}> */}
-            {props.children}
-          {/* </RainbowKitProvider> */}
+          {app}
         </WagmiConfig>
       </BrowserRouter>
     </Provider>
