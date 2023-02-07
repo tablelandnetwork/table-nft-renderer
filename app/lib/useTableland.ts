@@ -2,18 +2,24 @@ import { connect, SUPPORTED_CHAINS } from '@tableland/sdk';
 import { ChainName } from '@tableland/sdk';
 const supportedChains = Object.entries(SUPPORTED_CHAINS);
 
+
+
 export var tablelandConnection = connect({
-  host: "https://testnet.tableland.network"
+  host: "https://testnets.tableland.network"
 });
 
 export function getTablelandConnection() {
   return tablelandConnection;
 }
 
-export async function startTableLand(provider, signer) {
+import chains from '../../lib/chains.js';
+
+export async function startTableLand(provider, signer, chain="1") {
 
 
-  const chainId = (await provider.getNetwork()).chainId;
+  const chainId = parseInt(chain);
+
+  const network = (chains[chainId]===undefined || chains[chainId]?.mainnet) ? "" : "testnets.";
 
   const supportedChains = Object.entries(SUPPORTED_CHAINS);
 
@@ -21,8 +27,8 @@ export async function startTableLand(provider, signer) {
   let currentChain = supportedChains.find(chain => chain[1].chainId === chainId);
   
   const tbl = await connect({
-    host: "https://testnet.tableland.network",
-    chain: currentChain[0] as ChainName,
+    host: `https://${network}tableland.network`,
+    chain: currentChain?.[0] as ChainName,
     signer: signer
   });
 
