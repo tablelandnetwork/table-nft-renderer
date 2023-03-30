@@ -1,23 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getTablelandConnection, tablelandConnection } from '../lib/useTableland';
+
+import { Database } from '@tableland/sdk';
+
+function transformTableData(obj) {
+  if(obj.length < 1) return {columns: [], rows: []};
+  const columns = Object.keys(obj[0]).map(key => ({ name: key }));
+  const rows = obj.map(row => Object.values(row));
+  return { columns, rows };
+}
 
 export const queryTableland = createAsyncThunk('results/fetchResults', async (action:any) => {
   const { query } = action;
-  let results;
+  let results = {};
   let error = null;
 
-
-  const tbl = getTablelandConnection();
-
-
+  const db = new Database();
   
   try {
-    let { type, table } = await sqlparser.normalize(query);
-    results = type === "read" ? await tbl.read(query) : await tbl.write(query);
-    results.table = table;
+    const r = await db.prepare(query).all();
+    const resy = r.results;
+    results = transformTableData(resy);
+
+
   } catch (e) {
     error = `${e}`;
-    results = {};
   }
   
   return { 

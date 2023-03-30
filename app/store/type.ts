@@ -6,9 +6,9 @@ export const findType = createAsyncThunk('type/findType', async (action:any) => 
   const { query } = action;
 
 
-  let { type, table } = await sqlparser.normalize(query);
+  let { type } = await sqlparser.normalize(query);
 
-  return type;
+  return "read";
 });
 
 

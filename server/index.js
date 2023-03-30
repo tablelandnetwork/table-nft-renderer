@@ -1,12 +1,16 @@
 import express from "express";
-import fetch from 'node-fetch';
-import * as tableland from '@tableland/sdk';
+import fetch, {Headers} from 'node-fetch';
+
+if (!globalThis.fetch) {
+  globalThis.fetch = fetch
+  globalThis.Headers = Headers
+}
+import {Database} from '@tableland/sdk';
 import font from './font.js';
 import findColor from "./findColor.js";
 import cors from 'cors';
 const app = express();
 app.use(cors())
-global.fetch = fetch;
 import * as url from 'url';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
@@ -39,25 +43,26 @@ app.use((req, res, next) => {
 app.use('/anim', express.static('./dist/public'));
 app.use('/js', express.static('./dist/public/js'));
 app.use('/assets', express.static('./dist/public/assets'));
-app.use('/3df484376831050b.wasm', express.static('./dist/public/3df484376831050b.wasm'));
+app.use('/f04323b42f2af60a.wasm', express.static('./dist/public/f04323b42f2af60a.wasm'));
 
 app.use('/anim', async (req, res, next) => {
   res.sendFile(`./dist/public/index.html`, {root: __dirname});
 });
 
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
-  try {
+ //  try {
     const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
-    let table_data = await fetch(`https://${network}tableland.network/chain/${req.params.chain_id}/tables/${req.params.table_id}`)
+    let table_data = await fetch(`https://${network}tableland.network/api/v1/tables/${req.params.chain_id}/${req.params.table_id}`)
       .then(r => r.json());
     let columns = table_data.schema.columns;
     const chain = chains[req.params.chain_id];
     if(!chain) throw ("unknown chain");
-    let conn = await tableland.connect({
-      chain: chain.slug
-    });
-    let data = await conn.read(`SELECT * FROM ${table_data.name};`);
+
     res.set("Content-Type", "image/svg+xml");
+
+    const db = new Database();
+    const r = await db.prepare(`SELECT * FROM ${table_data.name};`).all();
+    const data = {rows: r.results};
     let columnStartingPosition = 115;
     const columnsMarkup = columns.map((column, key) => {
       let constraints = column?.constraints?.length ? `${column.constraints.join(" ")}` : '';
@@ -127,7 +132,7 @@ app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
     </svg>
 
     `);
-  } catch (e) {
-    res.send(`Could not locate table: ${e}`);
-  }
+  // } catch (e) {
+  //   res.send(`Could not locate table: ${e}`);
+  // }
 });
