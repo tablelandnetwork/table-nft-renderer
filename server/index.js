@@ -12,9 +12,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors())
 import * as url from 'url';
-const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
-
 
 const port = 8080;
 
@@ -50,7 +48,7 @@ app.use('/anim', async (req, res, next) => {
 });
 
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
- //  try {
+  try {
     const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
     let table_data = await fetch(`https://${network}tableland.network/api/v1/tables/${req.params.chain_id}/${req.params.table_id}`)
       .then(r => r.json());
@@ -132,7 +130,7 @@ app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
     </svg>
 
     `);
-  // } catch (e) {
-  //   res.send(`Could not locate table: ${e}`);
-  // }
+  } catch (e) {
+    res.send(`Could not locate table: ${e}`);
+  }
 });
