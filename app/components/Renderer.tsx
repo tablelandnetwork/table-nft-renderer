@@ -1,10 +1,8 @@
 import React, 
 { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useProvider, useSigner } from 'wagmi';
 import {  useDispatch, useSelector } from 'react-redux';
 
-import { startTableLand } from '../lib/useTableland';
 
 import CodeEditor from './CodeEditor';
 import Loading from './Loading';
@@ -39,10 +37,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const prov = useProvider();
-  const signer = useSigner();
+  // const prov = useProvider();
+  // const signer = useSigner();
 
-  startTableLand(prov, signer.data, chain);
+  // startTableLand(prov, signer.data, chain);
 
   useEffect(() => {
     if(query) {
@@ -51,7 +49,7 @@ function App() {
       dispatch(setQuery(finalQuery));
     } else if(chain && tableId) {
       const network = chains[parseInt(chain)].mainnet ? "" : "testnets.";
-      fetch(`https://${network}tableland.network/chain/${chain}/tables/${tableId}`)
+      fetch(`https://${network}tableland.network/api/v1/tables/${chain}/${tableId}`)
         .then(r => r.json())
         .then(r => {
           if(r.name===undefined) return;
