@@ -50,10 +50,8 @@ app.use('/anim', async (req, res, next) => {
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
     const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
-    const validator = new Validator({chain: req.params.chain_id});
-    console.log(await validator.schema(req.params.table_id));
-    let table_data = await fetch(`https://${network}tableland.network/api/v1/tables/${req.params.chain_id}/${req.params.table_id}`)
-      .then(r => r.json());
+    const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
+    let table_data = await validator.getTableById({ chainId: req.params.chain_id, tableId: req.params.table_id })
     let columns = table_data.schema.columns;
     const chain = chains[req.params.chain_id];
     if(!chain) throw ("unknown chain");

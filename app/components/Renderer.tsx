@@ -13,6 +13,7 @@ import SuccessfulWrite from '../components/SuccessfulWrite';
 import { setQuery } from '../store/query';
 import Toasts from '../components/Toasts';
 import chains from '../../lib/chains.js';
+import { Validator } from '@tableland/sdk';
 
 function App() {
   const {
@@ -32,8 +33,8 @@ function App() {
       dispatch(setQuery(finalQuery));
     } else if(chain && tableId) {
       const network = chains[parseInt(chain)].mainnet ? "" : "testnets.";
-      fetch(`https://${network}tableland.network/api/v1/tables/${chain}/${tableId}`)
-        .then(r => r.json())
+      const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
+      validator.getTableById({ chainId: parseInt(chain), tableId: tableId })
         .then(r => {
           if(r.name===undefined) return;
           var finalQuery = query ? query : `SELECT * FROM ${r.name} LIMIT 50;`;
