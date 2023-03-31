@@ -5,7 +5,7 @@ if (!globalThis.fetch) {
   globalThis.fetch = fetch
   globalThis.Headers = Headers
 }
-import {Database} from '@tableland/sdk';
+import {Database, Validator} from '@tableland/sdk';
 import font from './font.js';
 import findColor from "./findColor.js";
 import cors from 'cors';
@@ -50,8 +50,8 @@ app.use('/anim', async (req, res, next) => {
 app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
     const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
-    let table_data = await fetch(`https://${network}tableland.network/api/v1/tables/${req.params.chain_id}/${req.params.table_id}`)
-      .then(r => r.json());
+    const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
+    let table_data = await validator.getTableById({ chainId: req.params.chain_id, tableId: req.params.table_id })
     let columns = table_data.schema.columns;
     const chain = chains[req.params.chain_id];
     if(!chain) throw ("unknown chain");
@@ -131,6 +131,7 @@ app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
 
     `);
   } catch (e) {
+    res.status(404);
     res.send(`Could not locate table: ${e}`);
   }
 });
