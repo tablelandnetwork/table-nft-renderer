@@ -12,7 +12,6 @@ import { queryTableland } from '../store/queryTableland';
 import SuccessfulWrite from '../components/SuccessfulWrite';
 import { setQuery } from '../store/query';
 import Toasts from '../components/Toasts';
-import chains from '../../lib/chains.js';
 import { Validator } from '@tableland/sdk';
 
 function App() {
@@ -32,8 +31,7 @@ function App() {
       dispatch(queryTableland({query: finalQuery}) as any);
       dispatch(setQuery(finalQuery));
     } else if(chain && tableId) {
-      const network = chains[parseInt(chain)].mainnet ? "" : "testnets.";
-      const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
+      const validator = Validator.forChain(parseInt(chain));
       validator.getTableById({ chainId: parseInt(chain), tableId: tableId })
         .then(r => {
           if(r.name===undefined) return;
