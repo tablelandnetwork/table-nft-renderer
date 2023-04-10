@@ -5,7 +5,7 @@ if (!globalThis.fetch) {
   globalThis.fetch = fetch
   globalThis.Headers = Headers
 }
-import {Database, Validator} from '@tableland/sdk';
+import { Database, Validator, helpers } from '@tableland/sdk';
 import font from './font.js';
 import findColor from "./findColor.js";
 import cors from 'cors';
@@ -14,7 +14,7 @@ app.use(cors())
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
 
-const port = 8080;
+const port = 3000;
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
@@ -27,8 +27,6 @@ function nameSlice(name, number=20) {
   return name;
 }
 
-import chains from '../lib/chains.js';
-
 
 app.use((req, res, next) => {
 
@@ -38,23 +36,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/anim', express.static('./dist/public'));
-app.use('/js', express.static('./dist/public/js'));
-app.use('/assets', express.static('./dist/public/assets'));
-app.use('/f04323b42f2af60a.wasm', express.static('./dist/public/f04323b42f2af60a.wasm'));
+app.get("/:chain_id/:table_id", async (req, res, next) => {
 
-app.use('/anim', async (req, res, next) => {
-  res.sendFile(`./dist/public/index.html`, {root: __dirname});
-});
+  const chain_id = req.query.chain_id;
+  const table_id = req.query.table_id.split(".")[0];
 
-app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
   try {
-    const network = chains[req.params.chain_id].mainnet ? "" : "testnets.";
-    const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
-    let table_data = await validator.getTableById({ chainId: req.params.chain_id, tableId: req.params.table_id })
+    const chain = helpers.getChainInfo(parseInt(chain_id));
+    const validator = Validator.forChain(parseInt(chain_id));
+    let table_data = await validator.getTableById({ chainId: chain_id, tableId: table_id })
     let columns = table_data.schema.columns;
-    const chain = chains[req.params.chain_id];
-    if(!chain) throw ("unknown chain");
 
     res.set("Content-Type", "image/svg+xml");
 
@@ -122,7 +113,7 @@ app.use("/:chain_id([0-9]{1,})/:table_id", async (req, res, next) => {
         }
         </style>
       <text x="25" y="35" class="text text-name">${nameSlice(table_data.name)}</text>
-      <text x="25" y="55" class="text">${chain.name}</text>
+      <text x="25" y="55" class="text">${chain.chainName}</text>
       <text x="25" y="75" class="text">rows: ${data.rows.length}</text>
       <text x="25" y="95" class="text">columns:</text>
       ${columnsMarkup}
