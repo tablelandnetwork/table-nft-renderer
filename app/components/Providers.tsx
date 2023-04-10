@@ -49,20 +49,12 @@ const wagmiClient = createClient({
 
 function ProvidersComponent(props) {
 
-  let app = inIframe() ? (
-    props.children
-  ) : (
-    <RainbowKitProvider chains={chains}>
-     {props.children}
-    </RainbowKitProvider>
-  );
-
   return (
     <Provider store={store}>
       <BrowserRouter>
         <WagmiConfig client={wagmiClient}>
           {/* @ts-ignore */}
-          {app}
+          {props.children}
         </WagmiConfig>
       </BrowserRouter>
     </Provider>
