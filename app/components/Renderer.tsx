@@ -2,10 +2,8 @@ import React,
 { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {  useDispatch, useSelector } from 'react-redux';
-
 import Loading from './Loading';
 import CodeEditor from './Code';
-
 import ProvidersComponent from './Providers';
 import Table from './Table';
 import { RootState } from '../store/store';
@@ -16,16 +14,14 @@ import { setQuery } from '../store/query';
 import Toasts from '../components/Toasts';
 import { Validator } from '@tableland/sdk';
 
-
-import extractChainAndTable from "../lib/extractChainAndTable.js";
-
 function App() {
   const {
     loading,
   } = useSelector((store: RootState) => store);  
 
   let [searchParams] = useSearchParams();
-  const [chain, tableId] = extractChainAndTable(window.location.pathname);
+  const regex = /(\d+)/g;
+  const [chain, tableId] = window.location.pathname.match(regex);
   const query = searchParams.get("query");
   const dispatch = useDispatch();
 
