@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/:chain_id/:table_id(\\d{1,}.svg)",
+      "destination": "/api"
+    },
+    {
+      "source": "/:chain_id/:table_id(\\d{1,}.html)",
+      "destination": "/api"
+    }
+  ]
+}

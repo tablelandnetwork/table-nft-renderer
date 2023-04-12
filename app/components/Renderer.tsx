@@ -2,8 +2,8 @@ import React,
 { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {  useDispatch, useSelector } from 'react-redux';
-import CodeEditor from './CodeEditor';
 import Loading from './Loading';
+import CodeEditor from './Code';
 import ProvidersComponent from './Providers';
 import Table from './Table';
 import { RootState } from '../store/store';
@@ -12,7 +12,6 @@ import { queryTableland } from '../store/queryTableland';
 import SuccessfulWrite from '../components/SuccessfulWrite';
 import { setQuery } from '../store/query';
 import Toasts from '../components/Toasts';
-import chains from '../../lib/chains.js';
 import { Validator } from '@tableland/sdk';
 
 function App() {
@@ -21,8 +20,8 @@ function App() {
   } = useSelector((store: RootState) => store);  
 
   let [searchParams] = useSearchParams();
-  const chain = searchParams.get("chain");
-  const tableId = searchParams.get("id");
+  const regex = /(\d+)/g;
+  const [chain, tableId] = window.location.pathname.match(regex);
   const query = searchParams.get("query");
   const dispatch = useDispatch();
 
@@ -32,8 +31,7 @@ function App() {
       dispatch(queryTableland({query: finalQuery}) as any);
       dispatch(setQuery(finalQuery));
     } else if(chain && tableId) {
-      const network = chains[parseInt(chain)].mainnet ? "" : "testnets.";
-      const validator = new Validator({baseUrl: `https://${network}tableland.network/api/v1`});
+      const validator = Validator.forChain(parseInt(chain));
       validator.getTableById({ chainId: parseInt(chain), tableId: tableId })
         .then(r => {
           if(r.name===undefined) return;

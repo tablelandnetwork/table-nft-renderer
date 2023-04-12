@@ -30,11 +30,12 @@ const webpackConfig = {
 }};
 
 mix
-  .setPublicPath("./dist/public")
+  .setPublicPath("./public")
   .webpackConfig(webpackConfig)
   .sass("app/styles/style.scss", "public/styles")
   .ts('app/app.tsx', 'public/js')
-  .copy('app/assets', 'dist/public/assets')
-  .copy('app/index.html', 'dist/public')
+  .copy('app/assets', 'public/assets')
+  .copy('app/index.html', 'public')
+  .copy('app/index.html', 'api/files/index.html')
   .react()
   .sourceMaps();
