@@ -13,6 +13,7 @@ const app = express();
 app.use(cors())
 import * as url from 'url';
 import path from "path";
+import { readFileSync } from "fs";
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
 
 const port = 3000;
@@ -54,9 +55,8 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     let columns = table_data.schema.columns;
 
     if(extension === "html") {
-      
-      res.send(path.join(__dirname, 'index.html'));
-      // res.sendFile('./index.html', { root: __dirname });
+      const indexHtml = readFileSync(path.join(process.cwd(), 'files', 'index.html'), 'utf8');
+      res.send(indexHtml);
       return;
     }
 
