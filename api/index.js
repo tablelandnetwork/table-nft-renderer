@@ -12,8 +12,12 @@ import cors from 'cors';
 const app = express();
 app.use(cors())
 import * as url from 'url';
-import path from "path";
+import { readFile } from "fs/promises";
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
+
+const htmlPage = async function content(path) {  
+  return await readFile('./app/index.html', 'utf8')
+}();
 
 const port = 3000;
 
@@ -52,6 +56,12 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     const validator = Validator.forChain(parseInt(chain_id));
     let table_data = await validator.getTableById({ chainId: chain_id, tableId: table_id })
     let columns = table_data.schema.columns;
+
+    if(extension === "html") {
+      res.set("Content-Type", "text/html");
+      res.send(await htmlPage);
+      return;
+    }
 
     res.set("Content-Type", "image/svg+xml");
 
