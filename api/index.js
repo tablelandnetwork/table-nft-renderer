@@ -12,6 +12,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors())
 import * as url from 'url';
+import path from "path";
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
 
 const port = 3000;
@@ -48,7 +49,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     let columns = table_data.schema.columns;
 
     if(extension === "html") {
-      res.sendFile(`../public/index.html`, {root: __dirname});
+      res.sendFile(path.resolve('../public/index.html'), {root: __dirname});
       return;
     }
     res.set("Content-Type", "image/svg+xml");
