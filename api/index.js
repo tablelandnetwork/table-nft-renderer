@@ -52,10 +52,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     const validator = Validator.forChain(parseInt(chain_id));
     let table_data = await validator.getTableById({ chainId: chain_id, tableId: table_id })
     let columns = table_data.schema.columns;
-    if(extension === "html") {
-      res.sendFile(path.join(__dirname + '/../public/index.html'))
-      return;
-    }
+
     res.set("Content-Type", "image/svg+xml");
 
     const db = new Database();
