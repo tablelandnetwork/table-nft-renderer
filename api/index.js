@@ -55,7 +55,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     let columns = table_data.schema.columns;
 
     if(extension === "html") {
-      const indexHtml = readFileSync(path.join(process.cwd(), 'files', 'index.html'), 'utf8');
+      const indexHtml = readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
       res.send(indexHtml);
       return;
     }
