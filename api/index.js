@@ -49,7 +49,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     let columns = table_data.schema.columns;
 
     if(extension === "html") {
-      res.sendFile(path.resolve('./public/index.html'), {root: '../'});
+      res.sendFile(path.resolve('./public/index.html'), {root: `${__dirname}/../`});
       return;
     }
     res.set("Content-Type", "image/svg+xml");
