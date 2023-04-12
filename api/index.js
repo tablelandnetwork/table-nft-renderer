@@ -12,12 +12,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors())
 import * as url from 'url';
-import { readFile } from "fs/promises";
 const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
-
-const htmlPage = async function content(path) {  
-  return await readFile('./app/index.html', 'utf8')
-}();
 
 const port = 3000;
 
@@ -58,8 +53,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     let columns = table_data.schema.columns;
 
     if(extension === "html") {
-      res.set("Content-Type", "text/html");
-      res.send(await htmlPage);
+      res.sendFile('./index.html', { root: __dirname });
       return;
     }
 

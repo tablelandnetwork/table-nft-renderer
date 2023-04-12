@@ -36,5 +36,6 @@ mix
   .ts('app/app.tsx', 'public/js')
   .copy('app/assets', 'public/assets')
   .copy('app/index.html', 'public')
+  .copy('app/index.html', 'api')
   .react()
   .sourceMaps();
