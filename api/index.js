@@ -43,7 +43,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
 
   try {
     const chain_id = req.query.chain_id || req.params.chain_id;
-    const [table_id, extension] = req.query?.table_id.split(".") || req.params?.table_id.split(".");
+    const [table_id, extension] = req.query?.table_id?.split(".") || req.params?.table_id?.split(".");
 
     const chain = helpers.getChainInfo(parseInt(chain_id));
     const validator = Validator.forChain(parseInt(chain_id));
