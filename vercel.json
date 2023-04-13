@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/:chain_id/:table_id(\\d{1,}.svg)",
+      "source": "/:chainId/:tableId(\\d{1,}.svg)",
       "destination": "/api"
     },
     {
-      "source": "/:chain_id/:table_id(\\d{1,}.html)",
+      "source": "/:chainId/:tableId(\\d{1,}.html)",
       "destination": "/api"
     }
   ],

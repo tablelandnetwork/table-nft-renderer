@@ -1,6 +1,4 @@
-
 # @tablelandnetwork/table-nft-renderer
-
 
 [![License](https://img.shields.io/github/license/tablelandnetwork/table-nft-renderer.svg)](./LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/tablelandnetwork/table-nft-renderer.svg)](./package.json)
@@ -20,7 +18,6 @@ The Table NFT Renderer is an application for rendering the Tableland Table NFT.
 - [Contributing](#contributing)
 - [License](#license)
 
-
 # Install
 
 ```console
@@ -31,14 +28,13 @@ npm install
 
 # Usage
 
-
 ## Start server
 
-The server is primary used for rendering the SVG application. This is the SVG which is created for the `image` property of the ERC721's metadata. 
+The server is primary used for rendering the SVG application. This is the SVG which is created for the `image` property of the ERC721's metadata.
 
-The svg can be found by visiting `localhost:8080/${chainId}/${tableTokenId}`. For example, `localhost:8080/5/2` will render the #2 on the Goerli (chain id `5`) network. 
+The svg can be found by visiting `localhost:8080/${chainId}/${tableTokenId}`. For example, `localhost:8080/5/2` will render the #2 on the Goerli (chain id `5`) network.
 
-During developement, the server can also be used to serve the NFT application. In these cases, the NFT application is rendering at `localhost:8080/anim/`. 
+During developement, the server can also be used to serve the NFT application. In these cases, the NFT application is rendering at `localhost:8080/anim/`.
 
 ## Build renderer application
 
@@ -61,8 +57,6 @@ Use `npm mix watch` for active developement.
 
 By default, the Tableland NFT renderer will appear at port 8080
 
-
-
 # Contributing
 
 PRs accepted.
@@ -73,4 +67,3 @@ Small note: If editing the README, please conform to the
 # License
 
 MIT AND Apache-2.0, © 2021-2022 Tableland Network Contributors
-

@@ -1,20 +1,18 @@
 import express from "express";
 import fetch, {Headers} from 'node-fetch';
+import { Database, Validator, helpers } from '@tableland/sdk';
+import font from './font.js';
+import findColor from "./findColor.js";
+import cors from 'cors';
+import path from "path";
+import { readFileSync } from "fs";
 
 if (!globalThis.fetch) {
   globalThis.fetch = fetch
   globalThis.Headers = Headers
 }
-import { Database, Validator, helpers } from '@tableland/sdk';
-import font from './font.js';
-import findColor from "./findColor.js";
-import cors from 'cors';
 const app = express();
-app.use(cors())
-import * as url from 'url';
-import path from "path";
-import { readFileSync } from "fs";
-const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
+app.use(cors());
 
 const port = 3000;
 
@@ -41,16 +39,16 @@ app.use((req, res, next) => {
 });
 
 
-app.get("/:chain_id/:table_id", async (req, res, next) => {
+app.get("/:chainId/:tableId", async (req, res, next) => {
 
   try {
-    const chain_id = req.query.chain_id || req.params.chain_id;
-    const [table_id, extension] = req.query?.table_id?.split(".") || req.params?.table_id?.split(".");
+    const chainId = req.query.chainId || req.params.chainId;
+    const [tableId, extension] = req.query?.tableId?.split(".") || req.params?.tableId?.split(".");
 
-    const chain = helpers.getChainInfo(parseInt(chain_id));
-    const validator = Validator.forChain(parseInt(chain_id));
-    let table_data = await validator.getTableById({ chainId: chain_id, tableId: table_id })
-    let columns = table_data.schema.columns;
+    const chain = helpers.getChainInfo(parseInt(chainId));
+    const validator = Validator.forChain(parseInt(chainId));
+    const tableData = await validator.getTableById({ chainId, tableId });
+    const columns = tableData.schema.columns;
 
     if(extension === "html") {
       const indexHtml = readFileSync(path.join(process.cwd(), 'public', 'index.html'), 'utf8');
@@ -61,22 +59,22 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
     res.set("Content-Type", "image/svg+xml");
 
     const db = new Database();
-    const r = await db.prepare(`SELECT * FROM ${table_data.name};`).all();
+    const r = await db.prepare(`SELECT * FROM ${tableData.name};`).all();
     const data = {rows: r.results};
     let columnStartingPosition = 115;
     const columnsMarkup = columns.map((column, key) => {
-      let constraints = column?.constraints?.length ? `${column.constraints.join(" ")}` : '';
-      let column_details = `${column.name} ${column.type} ${constraints}`;
-      let column_value = `<text x="35" y="${columnStartingPosition}" class="text text-small">${nameSlice(column_details, 19)}</text>`;
+      const constraints = column?.constraints?.length ? `${column.constraints.join(" ")}` : '';
+      const columnDetails = `${column.name} ${column.type} ${constraints}`;
+      const columnValue = `<text x="35" y="${columnStartingPosition}" class="text text-small">${nameSlice(columnDetails, 19)}</text>`;
       let content;
       if(columns.length < 9) {
-        content = column_value;
+        content = columnValue;
         columnStartingPosition += 20;
         return content;      
       }      
       switch(true) {
         case key < 7:
-          content = column_value;      
+          content = columnValue;      
           break;
 
         case key === 7: 
@@ -123,7 +121,7 @@ app.get("/:chain_id/:table_id", async (req, res, next) => {
           ${font}
         }
         </style>
-      <text x="25" y="35" class="text text-name">${nameSlice(table_data.name)}</text>
+      <text x="25" y="35" class="text text-name">${nameSlice(tableData.name)}</text>
       <text x="25" y="55" class="text">${chain.chainName}</text>
       <text x="25" y="75" class="text">rows: ${data.rows.length}</text>
       <text x="25" y="95" class="text">columns:</text>
