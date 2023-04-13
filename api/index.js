@@ -41,14 +41,10 @@ app.use((req, res, next) => {
 
 app.get("/:chain_id/:table_id", async (req, res, next) => {
 
-  if(!req.query.table_id) {
-    res.status(404).send();
-    return;
-  }
-  const chain_id = req.query.chain_id;
-  const [table_id, extension] = req.query.table_id.split(".");
-
   try {
+    const chain_id = req.query.chain_id || req.params.chain_id;
+    const [table_id, extension] = req.query?.table_id.split(".") || req.params?.table_id.split(".");
+
     const chain = helpers.getChainInfo(parseInt(chain_id));
     const validator = Validator.forChain(parseInt(chain_id));
     let table_data = await validator.getTableById({ chainId: chain_id, tableId: table_id })
