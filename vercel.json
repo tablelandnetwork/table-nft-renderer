@@ -8,5 +8,8 @@
       "source": "/:chain_id/:table_id(\\d{1,}.html)",
       "destination": "/api"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }
