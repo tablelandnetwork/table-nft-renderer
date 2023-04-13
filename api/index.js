@@ -29,6 +29,8 @@ function nameSlice(name, number=20) {
   return name;
 }
 
+app.use('/', express.static('./public'));
+
 
 app.use((req, res, next) => {
 
