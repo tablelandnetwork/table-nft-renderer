@@ -47,7 +47,7 @@ app.get("/:chainId/:tableId", async (req, res, next) => {
     const tableData = await validator.getTableById({ chainId, tableId });
     const columns = tableData.schema.columns;
 
-    if (extension === "html") {
+    if (extension.toLowerCase() === "html") {
       const indexHtml = readFileSync(
         path.join(process.cwd(), "public", "index.html"),
         "utf8"
@@ -56,7 +56,7 @@ app.get("/:chainId/:tableId", async (req, res, next) => {
       return;
     }
 
-    if (extension !== "svg") {
+    if (extension.toLowerCase() !== "svg") {
       res
         .status(404)
         .send("Not found. This endpoint only supports SVG or HTML extensions.");
