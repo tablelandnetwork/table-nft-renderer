@@ -56,6 +56,13 @@ app.get("/:chainId/:tableId", async (req, res, next) => {
       return;
     }
 
+    if (extension !== "svg") {
+      res
+        .status(404)
+        .send("Not found. This endpoint only supports SVG or HTML extensions.");
+      return;
+    }
+
     const rows = await validator.queryByStatement({
       statement: "select count(*) from " + tableData.name,
       unwrap: true,
