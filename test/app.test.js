@@ -11,13 +11,13 @@ describe("SVG Renderer", function () {
 
   afterEach(function () {});
 
-  test("Live table returns an SVG", async function () {
-    const svg = await fetch("http://localhost:3000/31337/1.svg");
+  test("Live table returns the HTML app", async function () {
+    const svg = await fetch("http://localhost:3000/31337/1.html");
     assert.match(svg.status < 300, true);
-    assert.match(svg.headers.get("Content-Type"), "image/svg+xml");
+    assert.match(svg.headers.get("Content-Type"), "text/html; charset=utf-8");
   });
-  test("Missing table returns 404 for SVG app", async function () {
-    const svg = await fetch("http://localhost:3000/31337/9999.svg");
+  test("Missing table returns 404 for HTML app", async function () {
+    const svg = await fetch("http://localhost:3000/31337/9999.html");
     assert.match(svg.status, 404);
   });
 });
