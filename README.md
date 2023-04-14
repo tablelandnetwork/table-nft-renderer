@@ -15,6 +15,7 @@ The Table NFT Renderer is an application for rendering the Tableland Table NFT.
   - [Start server](#start-server)
   - [Build renderer application](#build-renderer-application)
 - [Developement](#developement)
+  - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -56,6 +57,16 @@ npm start   // Stats that server
 Use `npm mix watch` for active developement.
 
 By default, the Tableland NFT renderer will appear at port 8080
+
+## Testing
+
+To test, run `npm test`
+
+To check for formatting, you can run `npm run lint` and `npm run prettier`.
+
+You can fix automatically fixable issues by running run `npm run format` which will run both Prettier and Eslint.
+
+Remember to format your files before submitting a pull request.
 
 # Contributing
 
