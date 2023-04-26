@@ -1,3 +1,0 @@
-dispatch:
-  - url: "render.tableland.xyz/*"
-    service: table-nft-svg
