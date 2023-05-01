@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const tableSlice = createSlice({
-  name: 'tableName',
-  initialState: '', 
+  name: "tableName",
+  initialState: "",
   reducers: {
-    setTableName (state, action) {
-      return action.payload
+    setTableName(state, action) {
+      return action.payload;
     },
-  }
+  },
 });
 
 export const { setTableName } = tableSlice.actions;

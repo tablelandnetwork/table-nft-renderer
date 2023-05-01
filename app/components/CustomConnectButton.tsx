@@ -1,28 +1,8 @@
 import React, { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store'
-import { activateToast } from '../store/toastsSlice';
-import inIframe from '../lib/inIframe';
 
 
 function CustomConnectButton(props) {
-
-  const [copied, setCopied] = useState(false);
-  const typeOfQuery = useSelector((store: RootState)=>store.typeOfQuery)
-  const dispatch = useDispatch();
-
-  if(inIframe()) {
-    if(!copied) {
-      return <button onClick={() => {
-
-        dispatch(activateToast({message: `Copy link to visit full app: https://console.tableland.xyz`, type: "success"}))
-      }}>Get link to full app</button>      
-    } else {
-      return <button>Now paste in 🔎 bar</button>
-    } 
-  }
-
 
 
     return (

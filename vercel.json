@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/:chainId/:tableId(\\d{1,}.svg)",
+      "destination": "/api"
+    },
+    {
+      "source": "/:chainId/:tableId(\\d{1,}.html)",
+      "destination": "/api"
+    }
+  ],
+  "github": {
+    "silent": true
+  }
+}

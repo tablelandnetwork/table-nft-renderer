@@ -1,45 +1,39 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { queryTableland } from './queryTableland';
-import store from './store';
-
-const initialResults = {columns: [], rows: []};
-
+import { createSlice } from "@reduxjs/toolkit";
+import { queryTableland } from "./queryTableland";
+const initialResults = { columns: [], rows: [] };
 
 const initialState = {
-  columns: [], 
+  columns: [],
   rows: [],
   table: null,
-  tx: null
-}; 
+  tx: null,
+};
 
 const resultsSlice = createSlice({
-  name: 'results',
-  initialState, 
+  name: "results",
+  initialState,
   reducers: {
-    setResults (state, action) {
-      return action.payload
+    setResults(state, action) {
+      return action.payload;
     },
     resetResults(state, action) {
       return initialResults;
     },
   },
   extraReducers(builder) {
-    builder.addCase(queryTableland.fulfilled, (state, action) => {  
-      if(action.payload.results) {
+    // eslint-disable-next-line no-unused-expressions
+    builder.addCase(queryTableland.fulfilled, (state, action) => {
+      if (action.payload.results) {
         return action.payload.results;
-      } 
-
-
-    }),
+      }
+    });
     builder.addCase(queryTableland.pending, (state, action) => {
       return initialResults;
-
     });
     builder.addCase(queryTableland.rejected, (state, action) => {
       return initialResults;
-
     });
-  }
+  },
 });
 
 export const { setResults } = resultsSlice.actions;
