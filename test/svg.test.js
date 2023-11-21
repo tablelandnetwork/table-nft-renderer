@@ -2,7 +2,7 @@ import { describe, test, afterEach, before } from "mocha";
 import { assert } from "sinon";
 import fetch from "node-fetch";
 
-describe("SVG Renderer", function () {
+describe("SVG Service", function () {
   this.timeout("30s");
 
   before(async function () {

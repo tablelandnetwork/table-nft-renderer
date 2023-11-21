@@ -38,7 +38,8 @@ app.use((req, res, next) => {
 
 app.get("/:chainId/:tableId", async (req, res, next) => {
   try {
-    const chainId = req.query.chainId || req.params.chainId;
+    const chainId = parseInt(req.query.chainId || req.params.chainId, 10);
+    if (isNaN(chainId) || chainId < 1) throw new Error("invalid chain id");
     const [tableId, extension] =
       req.query?.tableId?.split(".") || req.params?.tableId?.split(".");
 
@@ -68,6 +69,7 @@ app.get("/:chainId/:tableId", async (req, res, next) => {
       unwrap: true,
       extract: true,
     });
+
     let columnStartingPosition = 115;
     const columnsMarkup = columns
       .map((column, key) => {
