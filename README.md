@@ -20,7 +20,7 @@
 
 # Background
 
-Tableland tables are NFTs. The NFT metadata is served by Tableland. This metadata includes `image` and `animation_url` properties that point to this app. For example, https://tables.tableland.xyz/1/7.svg renders the image and https://tables.tableland.xyz/1/7.html render the interactive editor for table 7 on Ethereum mainnet.
+Tableland tables are NFTs. The NFT metadata is served by Tableland. This metadata includes `image` and `animation_url` properties that point to this app. For example, https://tables.tableland.xyz/1/7.svg renders the image and https://tables.tableland.xyz/1/7.html renders the interactive editor for table 7 on Ethereum mainnet.
 
 # Developement
 
