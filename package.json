@@ -63,7 +63,7 @@
     "@tableland/local": "^2.2.0",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.62.1",
-    "sass-loader": "^13.2.0",
+    "sass-loader": "^13.3.3",
     "sinon": "^17.0.1",
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.3"
