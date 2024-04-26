@@ -1,57 +1,58 @@
-import React from "react";
-import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+import React, { ReactNode, useState, useEffect } from "react";
+import "@rainbow-me/rainbowkit/styles.css";
 import {
-  chain,
-  configureChains,
-  createClient,
-  createStorage,
-  WagmiConfig,
-} from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
-import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "../store/store";
+  getDefaultConfig,
+  RainbowKitProvider,
+  Chain,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
+import * as chain from "wagmi/chains";
+import { type HttpTransport, http } from "viem";
+import dotenv from "dotenv";
 
-const { chains, provider } = configureChains(
-  [
-    chain.mainnet,
-    chain.polygon,
-    chain.optimism,
-    chain.arbitrum,
-    chain.arbitrumGoerli,
-    chain.goerli,
-  ],
-  [publicProvider()]
+dotenv.config();
+
+// All of the chains configured below are supported by Tableland
+// @ts-expect-error this is valid; the OP chains cause a type error
+const chains: readonly [Chain, ...Chain[]] = [
+  chain.mainnet,
+  chain.polygon,
+  chain.optimism,
+  chain.arbitrum,
+  chain.filecoin,
+  chain.arbitrumSepolia,
+  chain.sepolia,
+  chain.polygonAmoy,
+  chain.optimismSepolia,
+  chain.filecoinCalibration,
+] as const;
+
+const transports: Record<number, HttpTransport> = Object.fromEntries(
+  chains.map((c) => [c.id, http()])
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "Tableland Table NFT",
+export const config = getDefaultConfig({
+  appName: "Tableland Starter",
   chains,
+  transports,
+  projectId: process.env.WALLET_CONNECT_PROJECT_ID ?? "", // Set up a WalletConnect account: https://walletconnect.com/
 });
 
-const wagmiClient = createClient({
-  // autoConnect: true,
-  connectors,
-  provider,
-  storage: createStorage({
-    storage: {
-      getItem: () => null,
-      setItem: () => {},
-      removeItem: () => {},
-    },
-  }),
-});
+const queryClient = new QueryClient();
 
-function ProvidersComponent(props) {
+function ProvidersComponent({ children }: { children: ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <WagmiConfig client={wagmiClient}>
-          {/* @ts-ignore */}
-          {props.children}
-        </WagmiConfig>
-      </BrowserRouter>
-    </Provider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider theme={darkTheme()}>
+          {mounted && children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }
 
