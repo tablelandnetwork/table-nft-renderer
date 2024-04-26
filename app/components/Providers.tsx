@@ -34,7 +34,7 @@ const transports: Record<number, HttpTransport> = Object.fromEntries(
 );
 
 export const config = getDefaultConfig({
-  appName: "Tableland Starter",
+  appName: "Tableland Table NFT",
   chains,
   transports,
   projectId: process.env.WALLET_CONNECT_PROJECT_ID ?? "", // Set up a WalletConnect account: https://walletconnect.com/
