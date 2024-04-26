@@ -21,7 +21,6 @@ body {
 }
 
 .toast {
-  
   width: var(--toast-body-width);
   transition: margin 1s;
   border-radius: 3px;
@@ -37,8 +36,8 @@ body {
 .close-toast {
   position: absolute;
   right: 10px;
-  top: calc(50% - .5em);
-  cursor: pointer;  
+  top: calc(50% - 0.5em);
+  cursor: pointer;
 }
 
 .error {

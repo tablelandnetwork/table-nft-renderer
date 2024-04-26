@@ -1,36 +1,33 @@
-import React from 'react';
-import {
-  getDefaultWallets,
-  RainbowKitProvider
-} from '@rainbow-me/rainbowkit';
+import React from "react";
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import {
   chain,
   configureChains,
   createClient,
   createStorage,
   WagmiConfig,
-} from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
-// import { alchemyProvider } from "wagmi/providers/alchemy";
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../store/store';
-
-
+} from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../store/store";
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum, chain.arbitrumGoerli, chain.goerli],
   [
-    publicProvider(),
-  ]
+    chain.mainnet,
+    chain.polygon,
+    chain.optimism,
+    chain.arbitrum,
+    chain.arbitrumGoerli,
+    chain.goerli,
+  ],
+  [publicProvider()]
 );
 
-
 const { connectors } = getDefaultWallets({
-  appName: 'Tableland Table NFT',
-  chains
+  appName: "Tableland Table NFT",
+  chains,
 });
-
 
 const wagmiClient = createClient({
   // autoConnect: true,
@@ -40,14 +37,12 @@ const wagmiClient = createClient({
     storage: {
       getItem: () => null,
       setItem: () => {},
-      removeItem: () => {}
-    }
-  })
+      removeItem: () => {},
+    },
+  }),
 });
 
-
 function ProvidersComponent(props) {
-
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -58,6 +53,6 @@ function ProvidersComponent(props) {
       </BrowserRouter>
     </Provider>
   );
-};
+}
 
 export default ProvidersComponent;
