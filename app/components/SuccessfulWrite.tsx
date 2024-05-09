@@ -1,16 +1,14 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setQuery } from '../store/query';
-import { queryTableland } from '../store/queryTableland';
-import { RootState } from '../store/store';
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setQuery } from "../store/query";
+import { queryTableland } from "../store/queryTableland";
+import { RootState } from "../store/store";
 
 function SuccessfulWrite(props) {
-  
   const results = useSelector((store: RootState) => store.results);
   const dispatch = useDispatch();
 
-  if(!results.table) return;
+  if (!results.table) return;
 
   return (
     <div className="successful-write">
@@ -18,11 +16,13 @@ function SuccessfulWrite(props) {
       <br />
       Table: {results.table}
       <br />
-      <button onClick={() => {
-        const query = `SELECT * FROM ${results.table} LIMIT 50;`;
-        dispatch(setQuery(query));
-        dispatch(queryTableland({query}) as any);
-      }}>
+      <button
+        onClick={() => {
+          const query = `SELECT * FROM ${results.table} LIMIT 50;`;
+          dispatch(setQuery(query));
+          dispatch(queryTableland({ query }) as any);
+        }}
+      >
         View table
       </button>
     </div>

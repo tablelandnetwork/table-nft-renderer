@@ -1,20 +1,20 @@
-const mix = require('laravel-mix');
-const webpack = require('webpack');
+const mix = require("laravel-mix");
+const webpack = require("webpack");
 
 const webpackConfig = {
   plugins: [
     new webpack.DefinePlugin({
-      VERSION: JSON.stringify(require("./package.json").version)
-    })
+      VERSION: JSON.stringify(require("./package.json").version),
+    }),
   ],
   module: {
     rules: [
       {
         resolve: {
-            fullySpecified: false
-        }
-      }
-    ]
+          fullySpecified: false,
+        },
+      },
+    ],
   },
   resolve: {
     fallback: {
@@ -25,16 +25,17 @@ const webpackConfig = {
       os: false,
       https: false,
       http: false,
-      stream: false
-    }
-}};
+      stream: false,
+    },
+  },
+};
 
 mix
   .setPublicPath("./public")
   .webpackConfig(webpackConfig)
   .sass("app/styles/style.scss", "public/styles")
-  .ts('app/app.tsx', 'public/js')
-  .copy('app/assets', 'public/assets')
-  .copy('app/index.html', 'public')
+  .ts("app/app.tsx", "public/js")
+  .copy("app/assets", "public/assets")
+  .copy("app/index.html", "public")
   .react()
   .sourceMaps();

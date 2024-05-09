@@ -1,20 +1,19 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 function Table() {
-
   const results = useSelector((store: RootState) => store.results);
 
-  if(!results.columns) return null;
+  if (!results.columns) return null;
 
   return (
     <div className="table-wrapper">
       <table className="tabula-rasa">
         <thead>
           <tr>
-            {results.columns.map(column => {
-              return <th key={column.name}>{column.name}</th>
+            {results.columns.map((column) => {
+              return <th key={column.name}>{column.name}</th>;
             })}
           </tr>
         </thead>
@@ -23,21 +22,18 @@ function Table() {
             return (
               <tr key={rowKey}>
                 {row.map((cell, cellKey) => {
-                  let finalCell = typeof cell === 'object' ? JSON.stringify(cell) : cell;
+                  const finalCell =
+                    typeof cell === "object" ? JSON.stringify(cell) : cell;
 
-                  return (
-                    <td key={cellKey}>
-                      {finalCell}
-                    </td>
-                  )
+                  return <td key={cellKey}>{finalCell}</td>;
                 })}
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 export default Table;

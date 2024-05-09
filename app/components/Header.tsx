@@ -1,12 +1,11 @@
-import React from 'react';
-import CustomConnectButton from './CustomConnectButton';
-import Logo from './Logo';
+import React from "react";
+import CustomConnectButton from "./CustomConnectButton";
+import Logo from "./Logo";
 
 function Header(props) {
-
   return (
     <header>
-      <Logo /> 
+      <Logo />
       <CustomConnectButton />
     </header>
   );
