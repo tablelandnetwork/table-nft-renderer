@@ -21,6 +21,7 @@ const chains: readonly [Chain, ...Chain[]] = [
   chain.polygon,
   chain.optimism,
   chain.arbitrum,
+  chain.base,
   chain.filecoin,
   chain.arbitrumSepolia,
   chain.baseSepolia,
