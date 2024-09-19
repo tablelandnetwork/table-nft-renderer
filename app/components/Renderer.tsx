@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams, BrowserRouter } from "react-router-dom";
+import { useDispatch, useSelector, Provider } from "react-redux";
 import Loading from "./Loading";
 import CodeEditor from "./Code";
 import ProvidersComponent from "./Providers";
 import Table from "./Table";
-import { RootState } from "../store/store";
+import { type RootState, store } from "../store/store";
 import Error from "../components/Error";
 import { queryTableland } from "../store/queryTableland";
 import SuccessfulWrite from "../components/SuccessfulWrite";
@@ -57,7 +57,11 @@ function App() {
 function Renderer(props) {
   return (
     <ProvidersComponent>
-      <App />
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </ProvidersComponent>
   );
 }
