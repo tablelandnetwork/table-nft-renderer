@@ -10,9 +10,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import * as chain from "wagmi/chains";
 import { type HttpTransport, http } from "viem";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 // All of the chains configured below are supported by Tableland
 // @ts-expect-error this is valid; the OP chains cause a type error
@@ -39,7 +36,7 @@ export const config = getDefaultConfig({
   appName: "Tableland Table NFT",
   chains,
   transports,
-  projectId: process.env.WALLET_CONNECT_PROJECT_ID ?? "", // Set up a WalletConnect account: https://walletconnect.com/
+  projectId: process.env.REACT_APP_REOWN_PROJECT_ID || "482bbbb2051cac0db49303fca927c967", // Set up a WalletConnect account: https://walletconnect.com/
 });
 
 const queryClient = new QueryClient();
